@@ -15,7 +15,14 @@ this.getData();
 getData = () => {
       // "/api/data"
     axiosWithAuth().get('/api/data')
-        .then(res => console.log(res))
+        .then(res => {
+            console.log(res)
+            // res.data.data
+            // filter ut any object that is not "Gasoline - Regular" or is not "US" or "State of Hawai'i"
+            this.setState({
+                gasPrices: res.data.data.filter(price => price.type === "Gasoline - Regular").filter(price => price.location === 'US' || price.location === 'State of Hawaii')
+            })
+        })
         .catch(err => console.log(err))
 };
 
